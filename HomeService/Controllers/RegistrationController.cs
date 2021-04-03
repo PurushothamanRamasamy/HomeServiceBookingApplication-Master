@@ -17,7 +17,7 @@ namespace HomeService.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> RegisterUser()
+        public async Task<IActionResult> Registration()
         {
            // @Html.DropDownListFor(model => model.Specialization, new SelectList(ViewBag.specialization, "Value", "Text"), "--- Select ---", htmlAttributes: new { @class = "form-control", @id = "txtrole" })
 
@@ -37,6 +37,32 @@ namespace HomeService.Controllers
             }
             ViewBag.specialization = DropDownList;
             return View();
+        }
+        public async Task<IActionResult> RegisterProvider()
+        {
+            List<SelectListItem> DropDownList = new List<SelectListItem>();
+            List<Specialization> SpecificationList = new List<Specialization>();
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync("https://localhost:44350/api/Specializations"))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    SpecificationList = JsonConvert.DeserializeObject<List<Specialization>>(apiResponse);
+                }
+            }
+            foreach (var item in SpecificationList)
+            {
+                DropDownList.Add(new SelectListItem() { Text = item.Name, Value = item.Name });
+            }
+            ViewBag.specialization = DropDownList;
+            return View();
+            
+        }
+        public IActionResult RegisterUser()
+        {
+            
+            return View();
+
         }
         [HttpPost]
         public async Task<ActionResult> RegisterUser(User user)

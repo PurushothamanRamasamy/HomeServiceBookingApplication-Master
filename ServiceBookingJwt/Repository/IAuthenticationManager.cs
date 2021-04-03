@@ -8,5 +8,6 @@ namespace ServiceBookingJwt.Repository
    public interface IAuthenticationManager
     {
         public string Authenticate(string username, string password);
+        public string IsMobileExists(string mobile);
     }
 }

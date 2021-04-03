@@ -22,6 +22,36 @@ namespace HomeService.Controllers
         {
             _logger = logger;
         }
+        [HttpGet]
+        public IActionResult GetMobile()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> GetMobile(VerifyMobile mobile)
+        {
+            if (ModelState.IsValid)
+            {
+                string token = "";
+                using (var httpclient = new HttpClient())
+                {
+                    var postData = httpclient.PostAsJsonAsync<VerifyMobile>("https://localhost:44336/api/Authentication/IsuserExists", mobile);
+                    var res = postData.Result;
+                    if (res.IsSuccessStatusCode)
+                    {
+                        token = await res.Content.ReadAsStringAsync();
+                        TempData["token"] = token;
+                        if (token != null)
+                        {
+                            return RedirectToAction("Login");
+                        }
+
+                    }
+                }
+                return RedirectToAction("Registration", "Registration");
+            }
+            return View();
+        }
         public IActionResult Login()
         {
             return View();

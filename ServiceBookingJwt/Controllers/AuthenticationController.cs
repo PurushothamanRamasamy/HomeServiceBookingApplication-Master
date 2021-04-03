@@ -35,5 +35,15 @@ namespace ServiceBookingJwt.Controllers
                 return Unauthorized();
             return Ok(token);
         }
+        [AllowAnonymous]
+        [HttpPost("IsuserExists")]
+        public IActionResult IsuserExists([FromBody] UserServiceInfo user)
+        {
+            // _log4net.Info(" Http Authentication request Initiated");
+            var token = manager.IsMobileExists(user.Phoneno);
+            if (token == null)
+                return Unauthorized();
+            return Ok(token);
+        }
     }
 }
