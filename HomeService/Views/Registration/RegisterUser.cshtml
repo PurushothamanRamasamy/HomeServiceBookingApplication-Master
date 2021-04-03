@@ -1,0 +1,108 @@
+﻿@model HomeService.Models.User
+
+@{
+    ViewData["Title"] = "RegisterUser";
+}
+
+<div>
+    <button>  </button>
+</div>
+
+<h1>RegisterUser</h1>
+
+<h4>User</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="RegisterUser">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="form-group">
+                <label asp-for="Username" class="control-label"></label>
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phoneno" class="control-label"></label>
+                <input asp-for="Phoneno" class="form-control" />
+                <span asp-validation-for="Phoneno" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmailId" class="control-label"></label>
+                <input asp-for="EmailId" class="form-control" />
+                <span asp-validation-for="EmailId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Specialization" class="control-label"></label>
+                @Html.DropDownListFor(model => model.Specialization, new SelectList(ViewBag.specialization, "Value", "Text"), "--- Select ---", htmlAttributes: new { @class = "form-control", @id = "txtrole" })
+
+                @*                <input asp-for="Specialization" class="form-control" />
+                *@                <span asp-validation-for="Specialization" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Specification" class="control-label"></label>
+                <input asp-for="Specification" class="form-control" />
+                <span asp-validation-for="Specification" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServiceCity" class="control-label"></label>
+                <input asp-for="ServiceCity" class="form-control"  id="txtServiceCity"/>
+                <span asp-validation-for="ServiceCity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Aadhaarno" class="control-label"></label>
+                <input asp-for="Aadhaarno" class="form-control" />
+                <span asp-validation-for="Aadhaarno" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Role" class="control-label"></label>
+                <input asp-for="Role" class="form-control" />
+                <span asp-validation-for="Role" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Experience" class="control-label"></label>
+                <input asp-for="Experience" class="form-control" />
+                <span asp-validation-for="Experience" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Costperhour" class="control-label"></label>
+                <input asp-for="Costperhour" class="form-control" />
+                <span asp-validation-for="Costperhour" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="Rating" class="control-label"></label>
+                <input asp-for="Rating" class="form-control" />
+                <span asp-validation-for="Rating" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtICKUA_3IawnHVSpHhlZby-CiTZw2kKo&libraries=places">
+</script>
+<script>
+    var input = document.getElementById('txtServiceCity');
+    var txtSource = new google.maps.places.Autocomplete(input);
+    @*var input = document.getElementById('txtDestination');
+    var txtDestination = new google.maps.places.Autocomplete(input);*@
+</script>
