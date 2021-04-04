@@ -33,6 +33,19 @@ namespace UsersAPI.Repository
             }
             return role;
         }
+        public UserServiceInfo GetUserServiceInfoByUserName(string Username)
+        {
+            UserServiceInfo item = _context.UserServiceInfos.FirstOrDefault(usr => usr.Username == Username);
+
+            return item;
+        }
+
+        public UserServiceInfo GetUserServiceInfoByAadhaar(string Aadhaar)
+        {
+            UserServiceInfo item = _context.UserServiceInfos.FirstOrDefault(usr => usr.Aadhaarno == Aadhaar);
+
+            return item;
+        }
         /*public async Task<Role> GetUserRole(string uName, string pass)
         {
             Role Sp = new Role();

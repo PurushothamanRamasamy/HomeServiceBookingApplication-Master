@@ -49,7 +49,7 @@ namespace UsersAPI.Controllers
 
             return Ok(tempbill);
         }
-        [HttpGet("role{uname}")]
+        [HttpGet("role/{uname}")]
         public IActionResult GetUserRole(string uname)
         {
             _log4net.Info("Get Role of" + uname + "is invoked");
@@ -60,7 +60,31 @@ namespace UsersAPI.Controllers
             }
             return Ok(role);
         }
+        [HttpGet("Aadhaar/{Aadhaar}")]
+        public IActionResult getAadhaar(string Aadhaar)
+        {
+            return Ok(_context.GetUserServiceInfoByAadhaar(Aadhaar));
+        }
+        [HttpGet("Username/{Username}")]
+        public IActionResult GetUsername(string Username)
+        {
+            _log4net.Info("Get by id is called!");
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            //var user1= _context.GetUserServiceInfoByAadhaar(id);
+            var user = _context.GetUserServiceInfoByUserName(Username);
+            _log4net.Info("Data of the id returned!");
 
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+
+            return Ok(user);
+        }
         /* // GET: api/Users/5
          [HttpGet("{id}")]
          public async Task<ActionResult<UserServiceInfo>> GetUserServiceInfo(string id)

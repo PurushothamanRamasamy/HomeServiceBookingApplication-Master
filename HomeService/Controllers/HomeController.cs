@@ -1,4 +1,5 @@
 ﻿using HomeService.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -10,7 +11,12 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Net.Mail;
+using System.Text;
 using System.Threading.Tasks;
+using System.Web;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
+using Twilio.Types;
 
 namespace HomeService.Controllers
 {
@@ -30,30 +36,41 @@ namespace HomeService.Controllers
         [HttpPost]
         public async Task<IActionResult> GetMobile(VerifyMobile mobile)
         {
+            User usr = new User();
             if (ModelState.IsValid)
             {
                 string token = "";
                 using (var httpclient = new HttpClient())
                 {
-                    var postData = httpclient.PostAsJsonAsync<VerifyMobile>("https://localhost:44336/api/Authentication/IsuserExists", mobile);
-                    var res = postData.Result;
-                    if (res.IsSuccessStatusCode)
-                    {
-                        token = await res.Content.ReadAsStringAsync();
-                        TempData["token"] = token;
-                        if (token != null)
-                        {
-                            return RedirectToAction("Login");
-                        }
+                    /*StringContent content = new StringContent(JsonConvert.SerializeObject(mobile), Encoding.UTF8, "application/json")*/;
 
+                        
+                    using (var postData = httpclient.PostAsJsonAsync<VerifyMobile>("https://localhost:44336/api/Authentication/IsuserExists", mobile))
+                    {
+                        var res = postData.Result;
+                        if (res.IsSuccessStatusCode)
+                        {
+                            token = await res.Content.ReadAsStringAsync();
+                            HttpContext.Session.SetString("mobile", token);
+                            if (token != null)
+                            {
+                                return RedirectToAction("Login");
+                            }
+
+                        }
                     }
                 }
+                TempData["registermobile"] = mobile.Phoneno;
                 return RedirectToAction("Registration", "Registration");
             }
             return View();
         }
         public IActionResult Login()
         {
+            if (HttpContext.Session.GetString("mobile") == null)
+            {
+                return RedirectToAction("GetMobile");
+            }
             return View();
         }
 
@@ -69,7 +86,8 @@ namespace HomeService.Controllers
                 if (res.IsSuccessStatusCode)
                 {
                     token = await res.Content.ReadAsStringAsync();
-                    TempData["token"] = token;
+                    HttpContext.Session.SetString("IsvalidUser", token);
+
                     if (token != null)
                     {
                         return RedirectToAction("CheckRole", "Home",new { username=user.Username, password =user.Password});
@@ -82,26 +100,92 @@ namespace HomeService.Controllers
         }
         public async Task<IActionResult> CheckRole(string username,string password)
         {
+
             ///api/Users/{uname},{pass}
-            Role role = new Role();
+                if (HttpContext.Session.GetString("IsvalidUser") == null)
+                {
+                return RedirectToAction("Login");
+                }   
+
+                Role role = new Role();
+                using (var httpClient = new HttpClient())
+                {
+                    httpClient.BaseAddress = new Uri("https://localhost:44322/");
+                    using (var response = await httpClient.GetAsync("/api/Users/role/" + username))
+                    {
+                        string apiResponse = await response.Content.ReadAsStringAsync();
+                        role = JsonConvert.DeserializeObject<Role>(apiResponse);
+                    }
+                    if (role.role == null)
+                    {
+
+                    }
+                    if (role.role.ToLower() == "admin")
+                    {
+                        return RedirectToAction("Index", "Admin", new { role.role });
+                    }
+                }
+                return RedirectToAction("Login", "Home");
+            
+           
+        }
+        public async Task<bool> IsUserNameExist(string Username, int? id)
+        {
+            //var validateName = db.ServiceProviders.FirstOrDefault(x => x.ElectricianID == ElectricianID && x.Sid != id);
+            User validateName = new User();
             using (var httpClient = new HttpClient())
             {
-                httpClient.BaseAddress = new Uri("https://localhost:44322/");
-                using (var response = await httpClient.GetAsync("/api/Users/"+username+","+password))
+                using (var response = await httpClient.GetAsync("https://localhost:44322/api/Users/Username/" + Username))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
-                     role = JsonConvert.DeserializeObject<Role>(apiResponse);
+                    validateName = JsonConvert.DeserializeObject<User>(apiResponse);
                 }
-                if (role.role==null)
-                {
-                    
-                }
-                if(role.role.ToLower()=="admin")
-                {
-                    return RedirectToAction("Index", "Admin",new { role.role });
-                }
+
             }
-            return RedirectToAction("Login", "Home");
+            if (validateName.Usid != null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+        }
+       /* public ActionResult SendSMS()
+        {
+            const string accountSid = "AC13049f464eed16fc464d8efa546e3845";
+            const string authToken = "168f907ae0df650eedec38b4ceb70d19";
+
+            TwilioClient.Init(accountSid, authToken);
+            MessageResource.Create(
+                to: new PhoneNumber("+919344418426"),
+                from: new PhoneNumber("+1 201 335 0118"),
+                body: "Ahoy from Twilio!");
+            return View();
+        }*/
+        public async Task<bool> IsUserAadhaarExist(string Aadhaarno, int? id)
+        {
+            //var validateName = db.ServiceProviders.FirstOrDefault(x => x.ElectricianID == ElectricianID && x.Sid != id);
+            User validateName = new User();
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync("https://localhost:44322/api/Users/Aadhaar/" + Aadhaarno))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    validateName = JsonConvert.DeserializeObject<User>(apiResponse);
+                }
+
+            }
+            if (validateName.Usid != null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
         }
         public IActionResult Index()
         {

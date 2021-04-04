@@ -1,4 +1,5 @@
 ﻿using HomeService.Models;
+using HomeService.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
@@ -55,8 +56,35 @@ namespace HomeService.Controllers
                 DropDownList.Add(new SelectListItem() { Text = item.Name, Value = item.Name });
             }
             ViewBag.specialization = DropDownList;
+            
             return View();
             
+        }
+        [HttpPost]
+        public async Task<IActionResult> RegisterProvider(ProviderModel userModel)
+        {
+            User user = new User();
+            user.Username = userModel.Username;
+            user.Phoneno = TempData.Peek("registermobile").ToString();
+            user.Aadhaarno = userModel.Aadhaarno;
+            user.Specialization = userModel.Specialization;
+            user.Specification = userModel.Specification;
+            user.Password = userModel.Password;
+            user.ServiceCity = userModel.ServiceCity;
+            user.Experience = userModel.Experience;
+            user.Costperhour = userModel.Costperhour;
+            user.Role = "provider";
+            using (var httpClient = new HttpClient())
+            {
+                StringContent content = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+
+                using (var response = await httpClient.PostAsync("https://localhost:44322/api/users", content))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    user = JsonConvert.DeserializeObject<User>(apiResponse);
+                }
+            }
+            return RedirectToAction("Index", "home");
         }
         public IActionResult RegisterUser()
         {
@@ -65,10 +93,16 @@ namespace HomeService.Controllers
 
         }
         [HttpPost]
-        public async Task<ActionResult> RegisterUser(User user)
+        public async Task<ActionResult> RegisterUser(UserModel userModel)
         {
 
-            User usr = new User();
+            User user = new User();
+            user.Username = userModel.Username;
+            user.Phoneno = TempData.Peek("registermobile").ToString();
+            user.EmailId = userModel.EmailId;
+            user.Address = userModel.Address;
+            user.Password = userModel.Password;
+            user.Role = "user";
             using (var httpClient = new HttpClient())
             {
                 StringContent content = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
@@ -76,7 +110,7 @@ namespace HomeService.Controllers
                 using (var response = await httpClient.PostAsync("https://localhost:44322/api/users", content))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
-                    usr = JsonConvert.DeserializeObject<User>(apiResponse);
+                    user = JsonConvert.DeserializeObject<User>(apiResponse);
                 }
             }
             return RedirectToAction("Index", "home");

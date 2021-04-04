@@ -1,5 +1,6 @@
 ﻿using HomeService.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -25,12 +26,14 @@ namespace HomeService.Controllers
                     UserList = JsonConvert.DeserializeObject<List<User>>(apiResponse);
                 }
             }
-            TempData["ServiceProviderRequests"] = UserList.Where(usr=>usr.IsNewProvider==true && usr.Role.ToLower()=="provider").Count();
+            UserList = UserList.Where(usr => usr.IsNewProvider == true && usr.Role == "provider").Select(s => s).ToList();
+            TempData["ServiceProviderRequests"] = UserList.Count();
             return View(getrole);
         }
         
-        public ActionResult AddSpecilization()
+        public IActionResult AddSpecilization()
         {
+            
             return View();
         }
         [HttpPost]
@@ -58,8 +61,23 @@ namespace HomeService.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult AddSpecification()
+        public async Task<ActionResult> AddSpecification()
         {
+            List<SelectListItem> DropDownList = new List<SelectListItem>();
+            List<Specialization> SpecializationList = new List<Specialization>();
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync("https://localhost:44350/api/Specializations"))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    SpecializationList = JsonConvert.DeserializeObject<List<Specialization>>(apiResponse);
+                }
+            }
+            foreach (var item in SpecializationList)
+            {
+                DropDownList.Add(new SelectListItem() { Text = item.Name, Value = item.Name });
+            }
+            ViewBag.specialization = DropDownList;
             return View();
         }
         [HttpPost]
