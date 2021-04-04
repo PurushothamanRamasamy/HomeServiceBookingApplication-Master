@@ -70,7 +70,7 @@ namespace HomeService.Controllers
             user.Specialization = userModel.Specialization;
             user.Specification = userModel.Specification;
             user.Password = userModel.Password;
-            user.ServiceCity = userModel.ServiceCity;
+            user.ServiceCity = userModel.ServicePincodeOne;
             user.Experience = userModel.Experience;
             user.Costperhour = userModel.Costperhour;
             user.Role = "provider";
