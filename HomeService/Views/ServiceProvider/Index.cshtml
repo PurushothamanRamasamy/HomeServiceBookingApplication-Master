@@ -1,13 +1,13 @@
-﻿
+﻿    
 @{
     ViewData["Title"] = "Index";
 }
 
 @{ 
-   @* if (Convert.ToInt32())
+    if (Convert.ToInt32(TempData.Peek("ServiceBookingRequests")) !=0)
     {
-
-    }*@
+        
+    }
 }
 
 <h1>Index</h1>

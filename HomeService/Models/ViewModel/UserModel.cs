@@ -31,5 +31,8 @@ namespace HomeService.Models.ViewModel
         public string ConfirmPassword { get; set; }
         [Required]
         public string Address { get; set; }
+        [Required]
+        [RegularExpression("^[0-9]{6}$", ErrorMessage = "Invalid PinCode")]
+        public string Pincode { get; set; }
     }
 }

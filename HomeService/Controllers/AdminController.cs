@@ -1,4 +1,5 @@
 ﻿using HomeService.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
@@ -15,6 +16,10 @@ namespace HomeService.Controllers
     {
         public async Task<IActionResult> Index(string role)
         {
+            if (HttpContext.Session.GetString("IsAdminLoggedin") == null)
+            {
+                return RedirectToAction("Login", "home");
+            }
             Role getrole = new Role();
             getrole.role = role;
             List<User> UserList = new List<User>();
@@ -33,7 +38,10 @@ namespace HomeService.Controllers
         
         public IActionResult AddSpecilization()
         {
-            
+            if (HttpContext.Session.GetString("IsAdminLoggedin") == null)
+            {
+                return RedirectToAction("Login", "home");
+            }
             return View();
         }
         [HttpPost]
@@ -63,6 +71,10 @@ namespace HomeService.Controllers
 
         public async Task<ActionResult> AddSpecification()
         {
+            if (HttpContext.Session.GetString("IsAdminLoggedin") == null)
+            {
+                return RedirectToAction("Login", "home");
+            }
             List<SelectListItem> DropDownList = new List<SelectListItem>();
             List<Specialization> SpecializationList = new List<Specialization>();
             using (var httpClient = new HttpClient())
@@ -107,6 +119,10 @@ namespace HomeService.Controllers
         }
         public async Task<IActionResult> ServiceProviderRequests()
         {
+            if (HttpContext.Session.GetString("IsAdminLoggedin") == null)
+            {
+                return RedirectToAction("Login", "home");
+            }
             List<User> UserList = new List<User>();
             using (var httpClient = new HttpClient())
             {
@@ -121,6 +137,10 @@ namespace HomeService.Controllers
         }
         public async Task<IActionResult> Accept(string id)
         {
+            if (HttpContext.Session.GetString("IsAdminLoggedin") == null)
+            {
+                return RedirectToAction("Login", "home");
+            }
             User usr = new User();
             using (var httpClient = new HttpClient())
             {

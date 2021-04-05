@@ -70,7 +70,7 @@ namespace HomeService.Controllers
             user.Specialization = userModel.Specialization;
             user.Specification = userModel.Specification;
             user.Password = userModel.Password;
-            user.ServiceCity = userModel.ServicePincodeOne;
+            user.ServiceCity = userModel.ServicePincodeOne+","+userModel.ServicePincodeTwo+","+userModel.ServicePincodeThree;
             user.Experience = userModel.Experience;
             user.Costperhour = userModel.Costperhour;
             user.Role = "provider";
@@ -84,7 +84,9 @@ namespace HomeService.Controllers
                     user = JsonConvert.DeserializeObject<User>(apiResponse);
                 }
             }
-            return RedirectToAction("Index", "home");
+            TempData["ProviderDetails"] = JsonConvert.SerializeObject(user);
+            return RedirectToAction("DisplayMessage", "home", new { msg = "Succefully Registered", act = "Index", ctrl = "ServiceProvider", isinput = false });
+            //return RedirectToAction("Index", "ServiceProvider",new { usr=user});
         }
         public IActionResult RegisterUser()
         {
@@ -100,7 +102,7 @@ namespace HomeService.Controllers
             user.Username = userModel.Username;
             user.Phoneno = TempData.Peek("registermobile").ToString();
             user.EmailId = userModel.EmailId;
-            user.Address = userModel.Address;
+            user.Address = userModel.Address+","+userModel.Pincode;
             user.Password = userModel.Password;
             user.Role = "user";
             using (var httpClient = new HttpClient())
@@ -113,7 +115,8 @@ namespace HomeService.Controllers
                     user = JsonConvert.DeserializeObject<User>(apiResponse);
                 }
             }
-            return RedirectToAction("Index", "home");
+            TempData["UserDetails"] = JsonConvert.SerializeObject(user);
+            return RedirectToAction("Index", "Users");
         }
     }
 }

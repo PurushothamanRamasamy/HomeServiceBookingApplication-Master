@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HomeService.Models.ViewModel.ProviderModel>
+﻿@model IEnumerable<HomeService.Models.User>
 
 @{
     ViewData["Title"] = "Index";
@@ -15,29 +15,23 @@
             <th>
                 @Html.DisplayNameFor(model => model.Username)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Password)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ConfirmPassword)
-            </th>
+            
             <th>
                 @Html.DisplayNameFor(model => model.Specialization)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Specification)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ServicePincodeOne)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Aadhaarno)
-            </th>
+            
+            
             <th>
                 @Html.DisplayNameFor(model => model.Experience)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Costperhour)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rating)
             </th>
             <th></th>
         </tr>
@@ -45,27 +39,18 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            
             <td>
                 @Html.DisplayFor(modelItem => item.Username)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ConfirmPassword)
-            </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.Specialization)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Specification)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ServicePincodeOne)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Aadhaarno)
-            </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.Experience)
             </td>
@@ -73,9 +58,11 @@
                 @Html.DisplayFor(modelItem => item.Costperhour)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+            <td>
+                @Html.ActionLink("Book", "BookService", "Booking", new { id = item.Usid, cost = item.Costperhour })
+
             </td>
         </tr>
 }

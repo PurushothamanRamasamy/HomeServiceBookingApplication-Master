@@ -51,5 +51,6 @@ namespace HomeService.Models.ViewModel
         [Required]
         [Display(Name = "Enter your service cost per hour")]
         public int? Costperhour { get; set; }
+        public int? Ratings { get; set; }
     }
 }

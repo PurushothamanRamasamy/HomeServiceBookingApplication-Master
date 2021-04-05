@@ -23,16 +23,7 @@ namespace UsersAPI.Repository
             UserServiceInfo usr = _context.UserServiceInfos.Find(id);
             return usr;
         }
-        public Role GetUserRole(string uName)
-        {
-            UserServiceInfo user = _context.UserServiceInfos.FirstOrDefault(usr => usr.Username == uName);
-            Role role = new Role();
-            if (user!=null)
-            {
-                role.role = user.Role;
-            }
-            return role;
-        }
+        
         public UserServiceInfo GetUserServiceInfoByUserName(string Username)
         {
             UserServiceInfo item = _context.UserServiceInfos.FirstOrDefault(usr => usr.Username == Username);
@@ -42,7 +33,7 @@ namespace UsersAPI.Repository
 
         public UserServiceInfo GetUserServiceInfoByAadhaar(string Aadhaar)
         {
-            UserServiceInfo item = _context.UserServiceInfos.FirstOrDefault(usr => usr.Aadhaarno == Aadhaar);
+            UserServiceInfo item = _context.UserServiceInfos.FirstOrDefault(usr => usr.Aadhaarno == Aadhaar && usr.Role!="admin");
 
             return item;
         }
@@ -56,6 +47,14 @@ namespace UsersAPI.Repository
         public IEnumerable<UserServiceInfo> GetAllUsers()
         {
             return _context.UserServiceInfos.ToList();
+        }
+        public IEnumerable<UserServiceInfo> GetAllProviders()
+        {
+            return _context.UserServiceInfos.Where(u=>u.Role== "provider" && u.IsNewProvider==false).ToList();
+        }
+        public IEnumerable<UserServiceInfo> GetUsers()
+        {
+            return _context.UserServiceInfos.Where(u => u.Role == "user").ToList();
         }
         public async Task<UserServiceInfo> PostUser(UserServiceInfo item)
         {

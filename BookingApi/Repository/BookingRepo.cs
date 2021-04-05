@@ -42,28 +42,18 @@ namespace BookingApi.Repository
 
         public async Task<Booking> PostBooking(Booking item)
         {
-            Booking Sp = null;
+            Booking book =null;
             if (item == null)
             {
                 throw new NullReferenceException();
             }
             else
             {
-                Sp = new Booking() { Bookingid = item.Bookingid,
-                    CustomerId = item.CustomerId,
-                    ServiceProviderId = item.ServiceProviderId,
-                    Servicedate = item.Servicedate,
-                    Starttime=item.Starttime,
-                    Endtime=item.Endtime,
-                    Estimatedcost=item.Estimatedcost,
-                    Bookingstatus=item.Bookingstatus,
-                    Servicestatus=item.Servicestatus,
-                    Rating=item.Rating
-                };
-                await _context.Bookings.AddAsync(Sp);
+                book=new Booking {CustomerId = item.CustomerId,ServiceProviderId=item.ServiceProviderId,Servicedate=item.Servicedate,Starttime=item.Starttime,Endtime=item.Endtime,Estimatedcost=item.Estimatedcost,Bookingstatus=item.Bookingstatus,Servicestatus=item.Servicestatus,Rating=item.Rating};
+                await _context.Bookings.AddAsync(book);
                 await _context.SaveChangesAsync();
             }
-            return Sp;
+            return book;
         }
 
         
