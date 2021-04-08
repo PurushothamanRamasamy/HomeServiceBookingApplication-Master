@@ -1,4 +1,5 @@
 ﻿@model HomeService.Models.ViewModel.ProviderModel
+@{ Layout = "~/Views/Shared/_registerLayout.cshtml"; }
 
 <h4>User</h4>
 <hr />
@@ -26,7 +27,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Specialization" class="control-label"></label>
-                @Html.DropDownListFor(model => model.Specialization, new SelectList(ViewBag.specialization, "Value", "Text"), "--- Select ---", htmlAttributes: new { @class = "form-control", @id = "txtrole" })
+                @Html.DropDownListFor(model => model.Specialization, new SelectList(ViewBag.specialization, "Value", "Text"), "--- Select ---", htmlAttributes: new { @class = "form-control", @id = "txtspec", onchange = "onChangeSpec();" })
                 <span asp-validation-for="Specialization" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -35,21 +36,36 @@
                 <span asp-validation-for="Specification" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ServicePincodeOne" class="control-label"></label>
-                <input asp-for="ServicePincodeOne" class="form-control"  />
+                <label asp-for="ServicePincodeOne" class="control-label"></label><span id="addpincode">
+                    <button type="button" class="btn btn-sm btn-primary" id="addbtn" style="cursor:pointer" onclick="fun()">+</button>
+                </span>
+                <input asp-for="ServicePincodeOne" class="form-control" />
                 <span asp-validation-for="ServicePincodeOne" class="text-danger"></span>
             </div>
             <script>
                 var isOpen = false;
             </script>
-            <div id="addpincode">
-                <button type="button" class="btn btn-sm btn-primary" style="cursor:pointer" onclick="fun()">Add</button>
-            </div>
             
+
             <script>
+                function onChangeSpec() {
+                    jQuery.ajax({
+                    url: '@Url.Action("", "")',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ data: data2 }),
+                    success: function (result) { }
+                });
+                }
                 function fun() {
-                    document.getElementById('addpincode').style.display = "none";
                     document.getElementById('showdiv').style.display = "block";
+                    document.getElementById('addbtn').innerHTML = "-";
+                    document.getElementById('addbtn').setAttribute('onclick', 'remove()');
+                }
+                function remove() {
+                    document.getElementById('showdiv').style.display = "none";
+                    document.getElementById('addbtn').innerHTML = "+";
+                    document.getElementById('addbtn').setAttribute('onclick', 'fun()');
                 }
             </script>
             <div style="display:none" id="showdiv">
