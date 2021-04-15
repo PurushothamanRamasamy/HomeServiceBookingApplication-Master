@@ -1,4 +1,5 @@
 ﻿using HomeService.Models;
+using HomeService.Models.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -12,6 +13,7 @@ namespace HomeService.Controllers
 {
     public class ServiceProviderController : Controller
     {
+        public static Booking bookingrequest;
         public async Task<IActionResult> Index()
         {
             if (HttpContext.Session.GetString("IsProviderLoggedin") == null)
@@ -33,9 +35,44 @@ namespace HomeService.Controllers
 
                 }
             }
-            List<Booking> bookingrequest = bookinglist.Where(b => b.ServiceProviderId == usr.Usid && b.Servicestatus == false && b.Bookingstatus == false).ToList();
-            TempData["ServiceBookingRequests"] = bookingrequest.Count();
+            bookingrequest = bookinglist.FirstOrDefault(b => b.ServiceProviderId == usr.Usid && b.Servicestatus == false && b.Bookingstatus == false);
+            if (bookingrequest!=null)
+            {
+                TempData["ServiceBookingRequests"] = 1;
+            }
+            else
+            {
+                TempData["ServiceBookingRequests"] = 0;
+            }
+            
             return View();
+        }
+
+        public async Task<IActionResult> BookingRequests()
+        {
+            List<ShowBookingRequests> bookingRequests = new List<ShowBookingRequests>();
+
+            List<User> Userslist = new List<User>();
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync("https://localhost:44322/api/Users/getusers"))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    Userslist = JsonConvert.DeserializeObject<List<User>>(apiResponse);
+                }
+
+            }
+           
+                foreach (User usersl in Userslist)
+                {
+                    if (bookingrequest.CustomerId==usersl.Usid)
+                    {
+                        bookingRequests.Add(new ShowBookingRequests {UserName=usersl.Username,PhoneNumber=usersl.Phoneno,Email=usersl.EmailId,Address=usersl.Address,ServiceDate= bookingrequest.Servicedate,ServiceHours= bookingrequest.Starttime,ServiceCost= bookingrequest.Estimatedcost });
+                    }
+                }
+                
+           
+            return View(bookingRequests);
         }
     }
 }

@@ -81,7 +81,7 @@ namespace UsersAPI.Repository
                     Costperhour = item.Costperhour,
                     Rating = item.Rating,
                     IsNewProvider = true,
-                    IsProvicedBooked=false
+                    IsProviderBooked = false
                 };
                 await _context.UserServiceInfos.AddAsync(Sp);
                 await _context.SaveChangesAsync();
@@ -108,7 +108,7 @@ namespace UsersAPI.Repository
             sp.Password = item.Password;
             sp.Rating = item.Rating;
             sp.IsNewProvider = item.IsNewProvider;
-            sp.IsProvicedBooked = item.IsProvicedBooked;
+            sp.IsProviderBooked = item.IsProviderBooked;
             _context.SaveChanges();
             return sp;
         }
