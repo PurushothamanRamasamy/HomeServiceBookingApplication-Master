@@ -39,14 +39,12 @@ namespace HomeService.Controllers
         public async Task<IActionResult> GetMobile(VerifyMobile mobile)
         {
             User usr = new User();
+            TempData["EnteredMobile"] =mobile.Phoneno;
             if (ModelState.IsValid)
             {
                 string token = "";
                 using (var httpclient = new HttpClient())
-                {
-                    /*StringContent content = new StringContent(JsonConvert.SerializeObject(mobile), Encoding.UTF8, "application/json")*/;
-
-                        
+                {    
                     using (var postData = httpclient.PostAsJsonAsync<VerifyMobile>("https://localhost:44336/api/Authentication/IsuserExists", mobile))
                     {
                         var res = postData.Result;
@@ -79,22 +77,26 @@ namespace HomeService.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(Login user)
         {
-            string token = "";
-            using (var httpclient = new HttpClient())
+            if (ModelState.IsValid)
             {
-                httpclient.BaseAddress = new Uri("https://localhost:44336/");
-                var postData = httpclient.PostAsJsonAsync<Login>("api/Authentication/AuthenicateUser", user);
-                var res = postData.Result;
-                if (res.IsSuccessStatusCode)
+                user.Phoneno = TempData.Peek("EnteredMobile").ToString();
+                string token = "";
+                using (var httpclient = new HttpClient())
                 {
-                    token = await res.Content.ReadAsStringAsync();
-                    HttpContext.Session.SetString("IsvalidUser", token);
-
-                    if (token != null)
+                    httpclient.BaseAddress = new Uri("https://localhost:44336/");
+                    var postData = httpclient.PostAsJsonAsync<Login>("api/Authentication/AuthenicateUser", user);
+                    var res = postData.Result;
+                    if (res.IsSuccessStatusCode)
                     {
-                        return RedirectToAction("CheckRole", "Home",new { username=user.Username, password =user.Password});
-                    }
+                        token = await res.Content.ReadAsStringAsync();
+                        HttpContext.Session.SetString("IsvalidUser", token);
 
+                        if (token != null)
+                        {
+                            return RedirectToAction("CheckRole", "Home");
+                        }
+
+                    }
                 }
             }
             return View();

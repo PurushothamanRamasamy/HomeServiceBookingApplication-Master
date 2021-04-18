@@ -8,7 +8,7 @@ namespace HomeService.Models
 {
     public class VerifyMobile
     {
-        [Required]
+        [Required (ErrorMessage ="Enter Mobile number")]
         [DataType(DataType.PhoneNumber)]
         [RegularExpression("^[6-9]{1}[0-9]{9}$", ErrorMessage = "Invalid mobile number")]
 

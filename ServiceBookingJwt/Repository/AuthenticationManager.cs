@@ -21,7 +21,7 @@ namespace ServiceBookingJwt.Repository
         }
         public string Authenticate(string username, string password)
         {
-            if (!users.UserServiceInfos.Any(u => u.Username == username && u.Password == password))
+            if (!users.UserServiceInfos.Any(u => u.Phoneno == username && u.Password == password))
             {
                 return null;
             }

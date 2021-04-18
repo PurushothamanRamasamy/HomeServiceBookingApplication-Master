@@ -8,8 +8,9 @@ namespace HomeService.Models
 {
     public class Login
     {
-        public string Username { get; set; }
+        public string Phoneno { get; set; }
         [DataType(DataType.Password)]
+        [Required]
         public string Password { get; set; }
     }
 }

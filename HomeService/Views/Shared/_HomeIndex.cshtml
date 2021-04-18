@@ -6,30 +6,23 @@
     <title>@ViewData["Title"] - HomeService</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-minty.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        .btn:hover {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">HomeService</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class=" btn  pull-right">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="GetMobile">Login</a>
-                        </li>
-                       @* <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Register" asp-action="Privacy">Privacy</a>
-                        </li>*@
-                    </ul>
+    
+    <div class="container">
+        <div class="" style="margin-top:50px">
+            <div class="row">
+                <div class="col-9"></div>
+                <div class="col-3">
+                    <a class="btn btn-info font-weight-bold" asp-area="" asp-controller="Home" asp-action="GetMobile">Get Verify</a>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
+        </div>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

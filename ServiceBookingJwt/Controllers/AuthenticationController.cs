@@ -30,7 +30,7 @@ namespace ServiceBookingJwt.Controllers
         public IActionResult AuthenticateUser([FromBody] UserServiceInfo user)
         {
            // _log4net.Info(" Http Authentication request Initiated");
-            var token = manager.Authenticate(user.Username, user.Password);
+            var token = manager.Authenticate(user.Phoneno, user.Password);
             if (token == null)
                 return Unauthorized();
             return Ok(token);
