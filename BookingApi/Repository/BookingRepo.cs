@@ -37,6 +37,7 @@ namespace BookingApi.Repository
             Sp.Bookingstatus = item.Bookingstatus;
             Sp.Servicestatus = item.Servicestatus;
             Sp.Rating = item.Rating;
+            _context.SaveChanges();
             return Sp;
         }
 
@@ -55,8 +56,13 @@ namespace BookingApi.Repository
             }
             return book;
         }
+        public Booking GetById(int id)
+        {
+            Booking bk = _context.Bookings.FirstOrDefault(book => book.Bookingid == id);
+            return bk;
+        }
 
-        
+
 
 
 

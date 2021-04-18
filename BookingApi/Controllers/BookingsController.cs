@@ -61,7 +61,26 @@ namespace BookingApi.Controllers
 
             return Ok(addedSpecilization);
         }
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            _log4net.Info("Get by id is called!");
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        
+            var tempbook = _context.GetById(id);
+            _log4net.Info("Data of the id returned!");
+
+            if (tempbook == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(tempbook);
+        }
+
+
     }
 }

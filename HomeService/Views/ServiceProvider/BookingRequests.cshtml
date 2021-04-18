@@ -61,7 +61,7 @@
                 @Html.DisplayFor(modelItem => item.ServiceCost)
             </td>
             <td>
-                @Html.ActionLink("Accept", "Edit", new { /* id=item.PrimaryKey */ }) | 
+                @Html.ActionLink("Accept", "Accept", new {  id=item.BookingId  }) | 
                 @Html.ActionLink("Reject", "Edit", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>

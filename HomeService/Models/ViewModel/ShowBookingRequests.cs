@@ -7,6 +7,7 @@ namespace HomeService.Models.ViewModel
 {
     public class ShowBookingRequests
     {
+        public int BookingId { get; set; }
         public string UserName { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }

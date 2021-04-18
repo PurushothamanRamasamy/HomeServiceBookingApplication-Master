@@ -39,5 +39,10 @@ create table Booking(Bookingid int primary key identity ,CustomerId  varchar(50)
 	estimatedcost int,Bookingstatus bit default 0,Servicestatus bit default 0,Rating int
 )
 
+select * from Booking
+select * from UserServiceInfo
+
+delete from Booking where starttime=2
+
 
 

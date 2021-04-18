@@ -36,7 +36,7 @@ namespace HomeService.Controllers
                     SpecificationList = JsonConvert.DeserializeObject<List<User>>(apiResponse);
                 }
             }
-           List<User> sortedList = SpecificationList.OrderByDescending(u=>u.Rating).ToList();
+           List<User> sortedList = SpecificationList.OrderByDescending(u=>u.Rating).Where(s=>s.IsProviderBooked==false).ToList();
             foreach (User item in sortedList)
             {
                 if(item.ServiceCity.Contains(","))

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace HomeService.Controllers
@@ -67,12 +68,47 @@ namespace HomeService.Controllers
                 {
                     if (bookingrequest.CustomerId==usersl.Usid)
                     {
-                        bookingRequests.Add(new ShowBookingRequests {UserName=usersl.Username,PhoneNumber=usersl.Phoneno,Email=usersl.EmailId,Address=usersl.Address,ServiceDate= bookingrequest.Servicedate,ServiceHours= bookingrequest.Starttime,ServiceCost= bookingrequest.Estimatedcost });
+                        bookingRequests.Add(new ShowBookingRequests {
+                            BookingId=bookingrequest.Bookingid,
+                            UserName=usersl.Username,
+                            PhoneNumber=usersl.Phoneno,
+                            Email=usersl.EmailId,
+                            Address=usersl.Address,
+                            ServiceDate= bookingrequest.Servicedate,
+                            ServiceHours= bookingrequest.Starttime,
+                            ServiceCost= bookingrequest.Estimatedcost });
                     }
                 }
                 
            
             return View(bookingRequests);
+        }
+        public async Task<IActionResult> Accept(int id)
+        {
+           
+            Booking book = new Booking();
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync("https://localhost:44349/api/Bookings/" + id))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    book = JsonConvert.DeserializeObject<Booking>(apiResponse);
+                }
+            }
+            book.Bookingstatus = true;
+            using (var httpClient = new HttpClient())
+            {
+                StringContent content = new StringContent(JsonConvert.SerializeObject(book), Encoding.UTF8, "application/json");
+                using (var response = await httpClient.PutAsync("https://localhost:44349/api/Bookings/" + id, content))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    book = JsonConvert.DeserializeObject<Booking>(apiResponse);
+                }
+            }
+            return RedirectToAction("DisplayMessage", "home", new { msg = "Booking Request has successfully accepted", act = "Index", ctrl = "ServiceProvider", isinput = false });
+
+            //return RedirectToAction("Index");
+
         }
     }
 }
