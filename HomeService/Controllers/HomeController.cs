@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -198,6 +199,19 @@ namespace HomeService.Controllers
             }
 
         }
+
+        public bool DateValidation(Booking booking)
+        {
+            if(booking.Servicedate<DateTime.Today)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+        }
         public IActionResult Index()
         {
             
@@ -234,5 +248,7 @@ namespace HomeService.Controllers
             message.Inputdata = "Invalid Credentials";
             return View(message);
         }
+
+        
     }
 }

@@ -56,13 +56,12 @@ namespace BookingApi.Repository
             }
             return book;
         }
+
         public Booking GetById(int id)
         {
             Booking bk = _context.Bookings.FirstOrDefault(book => book.Bookingid == id);
             return bk;
         }
-
-
 
 
 

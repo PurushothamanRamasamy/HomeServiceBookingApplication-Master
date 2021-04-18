@@ -1,29 +1,40 @@
 ﻿@model HomeService.Models.Specialization
 
-@{
-    ViewData["Title"] = "AddSpecilization";
-}
+@{ ViewData["Title"] = "AddSpecilization"; }
+@{ Layout = "~/Views/Shared/_registerLayout.cshtml"; }
+<head>
+    <link rel="stylesheet" href="~/css/login.css" />
+</head>
+<div class="row" style="margin-top:100px">
 
-<h1>AddSpecilization</h1>
+    <div class="col-4"></div>
+    <div class="col-4">
 
-<h4>Specialization</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="AddSpecilization">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        <div class="form-horizontal card">
+            <h1>AddSpecilization</h1>
+
+
+            <hr />
+
+            <form asp-action="AddSpecilization">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+
+
+        </div>
+
+
     </div>
+    <div class="col-4"></div>
 </div>
-
 <div>
     <a asp-action="Index">Back to List</a>
 </div>

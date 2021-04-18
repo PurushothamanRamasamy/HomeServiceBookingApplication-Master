@@ -116,7 +116,8 @@ namespace HomeService.Controllers
                 }
             }
             TempData["UserDetails"] = JsonConvert.SerializeObject(user);
-            return RedirectToAction("Index", "Users");
+            // return RedirectToAction("Index", "Users");
+            return RedirectToAction("DisplayMessage", "home", new { msg = "Succefully Registered", act = "Index", ctrl = "ServiceProvider", isinput = false });
         }
     }
 }

@@ -24,7 +24,7 @@ namespace HomeService.Controllers
             string strUser = TempData.Peek("ProviderDetails").ToString();
             User usr = JsonConvert.DeserializeObject<User>(strUser);
             List<Booking> bookinglist = new List<Booking>();
-            if (usr.IsNewProvider==false&&usr.Role== "provider")
+            if (usr.IsNewProvider == false && usr.Role == "provider")
             {
                 using (var httpClient = new HttpClient())
                 {
@@ -37,7 +37,7 @@ namespace HomeService.Controllers
                 }
             }
             bookingrequest = bookinglist.FirstOrDefault(b => b.ServiceProviderId == usr.Usid && b.Servicestatus == false && b.Bookingstatus == false);
-            if (bookingrequest!=null)
+            if (bookingrequest != null)
             {
                 TempData["ServiceBookingRequests"] = 1;
             }
@@ -45,7 +45,7 @@ namespace HomeService.Controllers
             {
                 TempData["ServiceBookingRequests"] = 0;
             }
-            
+
             return View();
         }
 
@@ -63,29 +63,31 @@ namespace HomeService.Controllers
                 }
 
             }
-           
-                foreach (User usersl in Userslist)
+
+            foreach (User usersl in Userslist)
+            {
+                if (bookingrequest.CustomerId == usersl.Usid)
                 {
-                    if (bookingrequest.CustomerId==usersl.Usid)
+                    bookingRequests.Add(new ShowBookingRequests
                     {
-                        bookingRequests.Add(new ShowBookingRequests {
-                            BookingId=bookingrequest.Bookingid,
-                            UserName=usersl.Username,
-                            PhoneNumber=usersl.Phoneno,
-                            Email=usersl.EmailId,
-                            Address=usersl.Address,
-                            ServiceDate= bookingrequest.Servicedate,
-                            ServiceHours= bookingrequest.Starttime,
-                            ServiceCost= bookingrequest.Estimatedcost });
-                    }
+                        BookingId = bookingrequest.Bookingid,
+                        UserName = usersl.Username,
+                        PhoneNumber = usersl.Phoneno,
+                        Email = usersl.EmailId,
+                        Address = usersl.Address,
+                        ServiceDate = bookingrequest.Servicedate,
+                        ServiceHours = bookingrequest.Starttime,
+                        ServiceCost = bookingrequest.Estimatedcost
+                    });
                 }
-                
-           
+            }
+
+
             return View(bookingRequests);
         }
         public async Task<IActionResult> Accept(int id)
         {
-           
+
             Booking book = new Booking();
             using (var httpClient = new HttpClient())
             {
@@ -112,3 +114,5 @@ namespace HomeService.Controllers
         }
     }
 }
+   
+

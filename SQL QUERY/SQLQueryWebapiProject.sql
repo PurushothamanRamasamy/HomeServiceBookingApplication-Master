@@ -34,15 +34,13 @@ alter table UserServiceInfo drop column IsNewProvicer
 alter table UserServiceInfo add IsNewProvider bit default 0
 drop table Booking
 
-create table Booking(Bookingid int primary key identity ,CustomerId  varchar(50) FOREIGN KEY REFERENCES UserServiceInfo(USid),
+create table Booking(Bookingid int identity(1,1) primary key  ,CustomerId  varchar(50) FOREIGN KEY REFERENCES UserServiceInfo(USid),
 	ServiceProviderID  varchar(50) FOREIGN KEY REFERENCES UserServiceInfo(USid),servicedate date,starttime int,endtime int,
 	estimatedcost int,Bookingstatus bit default 0,Servicestatus bit default 0,Rating int
 )
 
-select * from Booking
-select * from UserServiceInfo
-
-delete from Booking where starttime=2
 
 
 
+
+truncate table booking

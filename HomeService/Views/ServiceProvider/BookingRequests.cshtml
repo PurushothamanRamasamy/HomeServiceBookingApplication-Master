@@ -1,4 +1,9 @@
-﻿@model IEnumerable<HomeService.Models.ViewModel.ShowBookingRequests>
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IEnumerable<HomeService.Models.ViewModel.ShowBookingRequests>
 
 @{
     ViewData["Title"] = "BookingRequests";
@@ -37,34 +42,35 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ServiceDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ServiceHours)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ServiceCost)
-            </td>
-            <td>
-                @Html.ActionLink("Accept", "Accept", new {  id=item.BookingId  }) | 
-                @Html.ActionLink("Reject", "Edit", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceHours)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceCost)
+                </td>
+                <td>
+                    @Html.ActionLink("Accept", "Accept", new { id = item.BookingId }) |
+                    @Html.ActionLink("Reject", "Edit", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

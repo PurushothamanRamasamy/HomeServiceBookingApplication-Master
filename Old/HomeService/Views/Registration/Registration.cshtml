@@ -1,0 +1,37 @@
+﻿@model HomeService.Models.User
+
+
+<div id="btns">
+    <div>
+        <button class="btn btn-primary" id="provider">Register as Provider</button>
+    </div>
+    <div>
+        <button class="btn btn-primary" id="user">Register as user</button>
+    </div>
+</div>
+
+<div id="viewprovider" style="display:none">
+    @{await Html.RenderPartialAsync("RegisterProvider");}
+</div>
+
+<div id="viewuser" style="display:none">
+    @{await Html.RenderPartialAsync("RegisterUser");}
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    $('#provider').click(function () {
+
+        $('#viewprovider').css("display", "block");
+        $('#viewuser').css("display", "none");
+    });
+    $('#user').click(function () {
+        $('#viewuser').css("display", "block");
+        $('#viewprovider').css("display", "none");
+    });
+</script>

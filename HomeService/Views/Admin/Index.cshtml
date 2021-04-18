@@ -1,16 +1,15 @@
-﻿
-@{  if (Convert.ToInt32(TempData.Peek("ServiceProviderRequests")) != 0)
+﻿@{ Layout = "~/Views/Shared/_registerLayout.cshtml"; }
+<head>
+    <link rel="stylesheet" href="~/css/Admin.css" />
+</head>
+
+@{ if (Convert.ToInt32(TempData.Peek("ServiceProviderRequests")) != 0)
     {
-    <a href="/admin/ServiceProviderRequests">Request <span>@TempData.Peek("ServiceProviderRequests")</span> </a>
-    }
-    else
-    {
-        <h1>No Requests</h1>
-    }
+<a href="/admin/ServiceProviderRequests">Request <span>@TempData.Peek("ServiceProviderRequests")</span> </a> }
+            else
+            {
+<h1>No Requests</h1> }
 
-<a href= "/admin/AddSpecification" class="btn btn-primary" > Add Specification</a>
+<a href="/admin/AddSpecification" class="btn btn-primary"> Add Specification</a>
 
-<a href="/admin/AddSpecilization" class="btn btn-primary"> Add Specialization</a>
-
-    
-}
+            <a href="/admin/AddSpecilization" class="btn btn-primary"> Add Specialization</a> }

@@ -1,11 +1,14 @@
 ﻿@model HomeService.Models.VerifyMobile
 @{ Layout = "~/Views/Shared/_Layout-getmobiles.cshtml"; }
+<head>
+    <link rel="stylesheet" href="~/css/login.css" />
+</head>
 <div class="row" style="margin-top:200px">
 
-    <div class="col-4"></div>
-    <div class="col-4">
+    <div class="col-4 "></div>
+    <div class="col-4 ">
 
-        <div class="form-horizontal">
+        <div class="form-horizontal card">
             <h4>VerifyMobile</h4>
             <hr />
 
@@ -29,6 +32,44 @@
     <div class="col-4"></div>
 </div>
 
+
+<!--<body>
+    <div id="card">
+        <div id="card-content">
+            <div id="card-title">
+                <h2>LOGIN</h2>
+                <div class="underline-title"></div>
+            </div>
+            <form method="post" class="form">-->
+                @*<label for="user-email" style="padding-top:13px">
+            &nbsp;Email
+        </label>
+        <input id="user-email" class="form-content" type="email" name="email" autocomplete="on" required />
+        <div class="form-border"></div>*@
+                <!--<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label for="user-password" style="padding-top:22px">
+                        &nbsp;PhoneNo
+                    </label>
+                    <input asp-for="Phoneno" class="form-content" type="email" name="email" autocomplete="on" required />
+                    <span asp-validation-for="Phoneno" class="text-danger"></span>
+                </div>
+
+             
+
+                <div class="form-group">
+                    <input id="submit-btn" type="submit" value="Next" class="btn btn-primary" />
+                </div>
+
+            </form>
+        </div>
+    </div>
+</body>-->
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+
+
+

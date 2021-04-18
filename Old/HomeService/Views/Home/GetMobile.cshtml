@@ -1,0 +1,34 @@
+﻿@model HomeService.Models.VerifyMobile
+@{ Layout = "~/Views/Shared/_Layout-getmobiles.cshtml"; }
+<div class="row" style="margin-top:200px">
+
+    <div class="col-4"></div>
+    <div class="col-4">
+
+        <div class="form-horizontal">
+            <h4>VerifyMobile</h4>
+            <hr />
+
+
+
+            <form asp-action="GetMobile">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Phoneno" class="control-label"></label>
+                    <input asp-for="Phoneno" class="form-control" />
+                    <span asp-validation-for="Phoneno" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Next" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+    <div class="col-4"></div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

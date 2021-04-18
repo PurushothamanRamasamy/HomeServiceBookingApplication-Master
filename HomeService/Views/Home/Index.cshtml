@@ -1,34 +1,12 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@{ ViewData["Title"] = "Home Page"; }
+@{ Layout = "~/Views/Shared/_HomeIndex.cshtml"; }
+<head>
+    <link rel="stylesheet" href="/css/HomeIndex.css" />
+</head>
+<body>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 
-    <a href="home/SentMail">Sent Mail</a>
 
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <!--<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>-->
+</body>
 
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-         https://firebase.google.com/docs/web/setup#available-libraries -->
-    <!--<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-analytics.js"></script>
 
-    <script>
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    var firebaseConfig = {
-    apiKey: "AIzaSyBNssoP2MT_CCAsmWtocuo1wrl7GL7Gd3E",
-    authDomain: "homeservices-972d3.firebaseapp.com",
-    projectId: "homeservices-972d3",
-    storageBucket: "homeservices-972d3.appspot.com",
-    messagingSenderId: "377109983140",
-    appId: "1:377109983140:web:05fedae45be9849554db31",
-    measurementId: "G-0MGRR60SNC"
-    };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
-    </script>-->
-</div>

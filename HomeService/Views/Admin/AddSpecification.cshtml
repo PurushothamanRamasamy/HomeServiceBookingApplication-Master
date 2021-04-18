@@ -1,34 +1,45 @@
 ﻿@model HomeService.Models.Specification
 
-@{
-    ViewData["Title"] = "AddSpecification";
-}
+@{ ViewData["Title"] = "AddSpecification"; }
+@{ Layout = "~/Views/Shared/_registerLayout.cshtml"; }
+<head>
+    <link rel="stylesheet" href="~/css/login.css" />
+</head>
 
-<h1>AddSpecification</h1>
+<div class="row" style="margin-top:100px">
 
-<h4>Specification</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="AddSpecification">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label  class="control-label">Choose Specialization</label>
-                @Html.DropDownListFor(model => model.SpecializationName, new SelectList(ViewBag.specialization, "Value", "Text"), "--- Select ---", htmlAttributes: new { @class = "form-control", @id = "txtrole" })
+    <div class="col-4"></div>
+    <div class="col-4">
 
-                <span asp-validation-for="SpecializationName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
+        <div class="form-horizontal card">
+            <h1>AddSpecification</h1>
 
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+
+            <hr />
+
+            <form asp-action="AddSpecification">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label class="control-label">Choose Specialization</label>
+                    @Html.DropDownListFor(model => model.SpecializationName, new SelectList(ViewBag.specialization, "Value", "Text"), "--- Select ---", htmlAttributes: new { @class = "form-control", @id = "txtrole" })
+
+                    <span asp-validation-for="SpecializationName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+
+
     </div>
+    <div class="col-4"></div>
 </div>
 
 <div>

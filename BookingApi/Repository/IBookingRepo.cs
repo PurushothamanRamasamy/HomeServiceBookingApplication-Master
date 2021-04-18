@@ -10,7 +10,7 @@ namespace BookingApi.Repository
     {
         IEnumerable<Booking> GetBookings();
         Task<Booking> PutBooking(int id, Booking item);
-        Booking GetById(int id);    
         Task<Booking> PostBooking(Booking item);
+        Booking GetById(int id);
     }
 }

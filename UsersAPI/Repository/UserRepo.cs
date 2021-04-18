@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UsersAPI.Repository
 {
-    public class UserRepo: IUserRepo
+    public class UserRepo : IUserRepo
     {
         private readonly UsersContext _context;
 
@@ -23,7 +23,7 @@ namespace UsersAPI.Repository
             UserServiceInfo usr = _context.UserServiceInfos.Find(id);
             return usr;
         }
-        
+
         public UserServiceInfo GetUserServiceInfoByUserName(string Username)
         {
             UserServiceInfo item = _context.UserServiceInfos.FirstOrDefault(usr => usr.Username == Username);
@@ -33,7 +33,7 @@ namespace UsersAPI.Repository
 
         public UserServiceInfo GetUserServiceInfoByAadhaar(string Aadhaar)
         {
-            UserServiceInfo item = _context.UserServiceInfos.FirstOrDefault(usr => usr.Aadhaarno == Aadhaar && usr.Role!="admin");
+            UserServiceInfo item = _context.UserServiceInfos.FirstOrDefault(usr => usr.Aadhaarno == Aadhaar && usr.Role != "admin");
 
             return item;
         }
@@ -50,7 +50,7 @@ namespace UsersAPI.Repository
         }
         public IEnumerable<UserServiceInfo> GetAllProviders()
         {
-            return _context.UserServiceInfos.Where(u=>u.Role== "provider" && u.IsNewProvider==false).ToList();
+            return _context.UserServiceInfos.Where(u => u.Role == "provider" && u.IsNewProvider == false).ToList();
         }
         public IEnumerable<UserServiceInfo> GetUsers()
         {
@@ -65,7 +65,8 @@ namespace UsersAPI.Repository
             }
             else
             {
-                Sp = new UserServiceInfo() {
+                Sp = new UserServiceInfo()
+                {
                     Usid = item.Username + "-" + item.Phoneno,
                     Username = item.Username,
                     Phoneno = item.Phoneno,
@@ -102,7 +103,7 @@ namespace UsersAPI.Repository
             }
             return sp;
         }
-        public async Task<UserServiceInfo> EditUser(string id,UserServiceInfo item)
+        public async Task<UserServiceInfo> EditUser(string id, UserServiceInfo item)
         {
             UserServiceInfo sp = await _context.UserServiceInfos.FindAsync(id);
             sp.Password = item.Password;

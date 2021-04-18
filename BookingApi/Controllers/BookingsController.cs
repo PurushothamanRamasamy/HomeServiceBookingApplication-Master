@@ -61,6 +61,7 @@ namespace BookingApi.Controllers
 
             return Ok(addedSpecilization);
         }
+
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -80,7 +81,5 @@ namespace BookingApi.Controllers
 
             return Ok(tempbook);
         }
-
-
     }
 }

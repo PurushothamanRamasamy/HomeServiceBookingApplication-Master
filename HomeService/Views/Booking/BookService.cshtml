@@ -21,6 +21,11 @@
                 <label asp-for="Servicedate" class="control-label"></label>
                 <input asp-for="Servicedate" class="form-control" />
                 <span asp-validation-for="Servicedate" class="text-danger"></span>
+                <asp:TextBox ID="datepicker1" runat="server" CssClass="input" placeholder="mm/dd/yyyy" onfocus="this.value = '';" onblur="if (this.value == ''){this.value = '';}" onchange="dateCheck();" />
+
+                <asp:CalendarExtender ID="CalendarExtender1" TargetControlID="datepicker1" Format="MM/dd/yyyy" runat="server" OnClientDateSelectionChanged="checkDate">
+                </asp:CalendarExtender>
+
             </div>
 
             <div class="form-group">
@@ -61,4 +66,86 @@
         var noofhours = $('#txttime').val();
         $('#estimatedcost').html("Estimated : "+parseInt(costperhour) * parseInt(noofhours));
     })
+</script>
+<script>
+    function dateCheck() {
+        debugger;
+        var date = document.getElementById('<%=datepicker1.ClientID%>').value;
+        var fields = date.split('/');
+        if (fields.length == 3) {
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = (today.getMonth() + 1); //January is 0!
+            var yyyy = today.getYear() + 1900;
+            var today = mm + '/' + dd + '/' + yyyy;
+
+            // var selecteddate = sender._selectedDate;
+
+            var dd1 = fields[1];
+            var mm1 = fields[0]; //January is 0!
+            var yyyy1 = fields[2];
+            if (yyyy1 < yyyy) {
+                alert("You cannot select a day earlier than today!");
+                document.getElementById('<%=datepicker1.ClientID%>').value = '';
+            }
+
+            else if (yyyy1 == yyyy) {
+                if (mm1 < mm) {
+                    alert("You cannot select a day earlier than today!");
+                    document.getElementById('<%=datepicker1.ClientID%>').value = '';
+                }
+
+                else if (mm1 == mm) {
+                    if (dd1 < dd) {
+                        alert("You cannot select a day earlier than today!");
+                        document.getElementById('<%=datepicker1.ClientID%>').value = '';
+                    }
+                }
+            }
+        }
+    }
+
+    function checkDate(sender, args) {
+        debugger;
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = (today.getMonth() + 1); //January is 0!
+        var yyyy = today.getYear();
+        var today = mm + '/' + dd + '/' + yyyy;
+        var selecteddate = sender._selectedDate;
+        var dd1 = selecteddate.getDate();
+        var mm1 = (selecteddate.getMonth() + 1); //January is 0!
+        var yyyy1 = selecteddate.getYear();
+        if (yyyy1 < yyyy) {
+            alert("You cannot select a day earlier than today!");
+            sender._selectedDate = new Date();
+
+            // set the date back to the current date
+
+            sender._textbox.set_Value(sender._selectedDate.format(sender._format))
+        }
+
+        else if (yyyy1 == yyyy) {
+            if (mm1 < mm) {
+                alert("You cannot select a day earlier than today!");
+                sender._selectedDate = new Date();
+
+                // set the date back to the current date
+
+                sender._textbox.set_Value(sender._selectedDate.format(sender._format))
+            }
+
+            else if (mm1 == mm) {
+                if (dd1 < dd) {
+                    alert("You cannot select a day earlier than today!");
+                    sender._selectedDate = new Date();
+
+                    // set the date back to the current date
+
+                    sender._textbox.set_Value(sender._selectedDate.format(sender._format))
+                }
+            }
+        }
+    }
+
 </script>

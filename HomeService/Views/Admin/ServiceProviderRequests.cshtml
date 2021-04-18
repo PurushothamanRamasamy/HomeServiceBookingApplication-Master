@@ -1,8 +1,7 @@
 ﻿@model IEnumerable<HomeService.Models.User>
 
-@{
-    ViewData["Title"] = "ServiceProviderRequests";
-}
+@{ ViewData["Title"] = "ServiceProviderRequests"; }
+@{ Layout = "~/Views/Shared/_registerLayout.cshtml"; }
 
 <h1>ServiceProviderRequests</h1>
 
@@ -24,7 +23,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.EmailId)
             </th>
-            
+
             <th>
                 @Html.DisplayNameFor(model => model.Specialization)
             </th>
@@ -40,70 +39,71 @@
             <th>
                 @Html.DisplayNameFor(model => model.Aadhaarno)
             </th>
-            
+
             <th>
                 @Html.DisplayNameFor(model => model.Experience)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Costperhour)
             </th>
-            
+
             <th>
                 @Html.DisplayNameFor(model => model.IsNewProvider)
             </th>
-            
+
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Usid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Username)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phoneno)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmailId)
-            </td>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.Specialization)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Specification)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ServiceCity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Aadhaarno)
-            </td>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.Experience)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Costperhour)
-            </td>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.IsNewProvider)
-            </td>
-           
-            <td>
-                @Html.ActionLink("Accept", "Accept", new { id=item.Usid }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
+        @foreach (var item in Model)
+        {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Usid)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Username)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Phoneno)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.EmailId)
+    </td>
+
+    <td>
+        @Html.DisplayFor(modelItem => item.Specialization)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Specification)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ServiceCity)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Address)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Aadhaarno)
+    </td>
+
+    <td>
+        @Html.DisplayFor(modelItem => item.Experience)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Costperhour)
+    </td>
+
+    <td>
+        @Html.DisplayFor(modelItem => item.IsNewProvider)
+    </td>
+
+    <td>
+        @Html.ActionLink("Accept", "Accept", new { id = item.Usid }) |
+        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+    </td>
+</tr>
 }
     </tbody>
 </table>
