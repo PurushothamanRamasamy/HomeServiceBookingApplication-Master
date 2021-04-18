@@ -15,6 +15,7 @@ namespace UsersAPI.Repository
         Task<UserServiceInfo> PostUser(UserServiceInfo item);
         UserServiceInfo GetUserById(string id);
         UserServiceInfo GetUserServiceInfoByUserName(string Username);
+        UserServiceInfo GetUserServiceInfoByMobile(string Mobile);
         UserServiceInfo GetUserServiceInfoByAadhaar(string Aadhaar);
         Task<UserServiceInfo> RemoveUser(string id);
         Task<UserServiceInfo> EditUser(string id, UserServiceInfo item);

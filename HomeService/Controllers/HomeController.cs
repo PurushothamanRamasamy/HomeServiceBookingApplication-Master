@@ -93,7 +93,7 @@ namespace HomeService.Controllers
 
                         if (token != null)
                         {
-                            return RedirectToAction("CheckRole", "Home");
+                            return RedirectToAction("CheckRole", "Home",new { username=user.Phoneno, password=user.Password });
                         }
 
                     }
@@ -115,7 +115,7 @@ namespace HomeService.Controllers
                 using (var httpClient = new HttpClient())
                 {
                     httpClient.BaseAddress = new Uri("https://localhost:44322/");
-                    using (var response = await httpClient.GetAsync("/api/Users/Username/" + username))
+                    using (var response = await httpClient.GetAsync("/api/Users/Mobile/" + username))
                     {
                         string apiResponse = await response.Content.ReadAsStringAsync();
                         user = JsonConvert.DeserializeObject<User>(apiResponse);

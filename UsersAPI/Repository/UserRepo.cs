@@ -30,6 +30,12 @@ namespace UsersAPI.Repository
 
             return item;
         }
+        public UserServiceInfo GetUserServiceInfoByMobile(string Mobile)
+        {
+            UserServiceInfo item = _context.UserServiceInfos.FirstOrDefault(usr => usr.Phoneno == Mobile);
+
+            return item;
+        }
 
         public UserServiceInfo GetUserServiceInfoByAadhaar(string Aadhaar)
         {

@@ -84,19 +84,26 @@ namespace UsersAPI.Controllers
 
             return Ok(user);
         }
-        /* // GET: api/Users/5
-         [HttpGet("{id}")]
-         public async Task<ActionResult<UserServiceInfo>> GetUserServiceInfo(string id)
-         {
-             var userServiceInfo = await _context.UserServiceInfos.FindAsync(id);
-             if (userServiceInfo == null)
-             {
-                 return NotFound();
-             }
-             return userServiceInfo;
-         }*/
+        [HttpGet("Mobile/{Mobile}")]
+        public IActionResult GetUserbyPhone(string Mobile)
+        {
+            _log4net.Info("Get by id is called!");
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            //var user1= _context.GetUserServiceInfoByAadhaar(id);
+            var user = _context.GetUserServiceInfoByMobile(Mobile);
+            _log4net.Info("Data of the id returned!");
 
-        // PUT: api/Users/5
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+
+            return Ok(user);
+        }
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUserServiceInfo(string id, UserServiceInfo userServiceInfo)
         {
